@@ -1,73 +1,120 @@
-# React + TypeScript + Vite
+# MedFlow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Clinical Triage & Shift Management Dashboard**
 
-Currently, two official plugins are available:
+A production-grade frontend application for managing emergency department patient triage, nurse shift scheduling, and real-time bed availability. Built with React, TypeScript, and Tailwind CSS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+> Built by a registered nurse turned software engineer — combining clinical domain expertise with modern frontend engineering.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+| Layer | Tool |
+|-------|------|
+| Framework | React 19 + TypeScript |
+| Build Tool | Vite |
+| Styling | Tailwind CSS v4 |
+| State (Client) | Zustand |
+| State (Server) | TanStack Query |
+| Routing | React Router v7 |
+| Forms | React Hook Form + Zod |
+| Charts | Recharts |
+| Tables | TanStack Table |
+| Testing | Vitest + React Testing Library + Playwright |
+| CI/CD | GitHub Actions |
+| Deployment | Vercel |
+| Code Quality | ESLint + Prettier + Husky + lint-staged |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Triage Queue
+- Real-time patient queue sorted by clinical priority (Australasian Triage Scale)
+- Colour-coded severity badges (Resuscitation → Non-Urgent)
+- Patient cards with chief complaint, wait time, and nurse assignment
+- Drag-and-drop reordering for charge nurses
+- Search and filter by status, priority, and assigned nurse
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Shift Management
+- Weekly calendar view with Early, Late, and Night shifts
+- Conflict detection for double-booked nurses
+- Understaffed ward warnings
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Dashboard Analytics
+- Key metrics: average wait time, patients seen, bed occupancy, staffing ratio
+- Trend charts for wait times and patient volume
+- Triage category distribution
+
+### Role-Based Access
+- Three roles: Nurse, Charge Nurse, Admin
+- Permission-based UI rendering
+- Route-level protection
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+
+- npm 9+
+
+### Installation
+```bash
+git clone git@github.com:eskersaeed/medflow.git
+cd medflow
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Development
+```bash
+npm run dev
 ```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+### Build
+```bash
+npm run build
+```
+
+## Project Structure
+```
+src/
+├── components/
+│   ├── ui/          # Reusable UI primitives (Badge, Button, Card)
+│   └── layout/      # Layout components (Sidebar, Header, MainLayout)
+├── features/
+│   ├── triage/      # Triage queue feature
+│   ├── scheduling/  # Shift management feature
+│   ├── dashboard/   # Analytics dashboard feature
+│   └── auth/        # Authentication and roles
+├── hooks/           # Shared custom hooks
+├── lib/             # Utilities and config
+├── mocks/           # MSW mock handlers and data
+├── styles/          # Global styles
+└── types/           # Shared TypeScript types
+```
+
+## Development Workflow
+
+- **Git:** Conventional Commits (`feat:`, `fix:`, `chore:`)
+- **Pre-commit:** Husky + lint-staged (auto-format and lint on every commit)
+- **Branching:** Feature branches → PR → squash merge to main
+
+## Roadmap
+
+- [x] Project scaffolding and tooling
+- [x] Core UI components (Badge, Button, Card)
+- [x] Layout with sidebar navigation and routing
+- [ ] State management (Zustand + TanStack Query)
+- [ ] Mock API with MSW
+- [ ] Triage queue with filtering and sorting
+- [ ] Patient detail panel
+- [ ] Shift scheduling calendar
+- [ ] Dashboard analytics with charts
+- [ ] Role-based access control
+- [ ] Comprehensive testing suite
+- [ ] CI/CD pipeline with GitHub Actions
+- [ ] Production deployment on Vercel
+
+## License
+
+MIT
