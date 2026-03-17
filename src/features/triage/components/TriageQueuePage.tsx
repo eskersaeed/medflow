@@ -1,10 +1,15 @@
 import { Header } from "@/components/layout/Header";
 import { PatientCard } from "./PatientCard";
+import { TriageFilterBar } from "./TriageFilterBar";
+import { useTriageStore } from "../stores/triageStore";
 
 function TriageQueuePage() {
+  const selectPatient = useTriageStore((state) => state.selectPatient);
+
   return (
     <div>
       <Header title="Triage Queue" subtitle="4 patients waiting" />
+      <TriageFilterBar />
       <div className="p-6 max-w-3xl space-y-4">
         <PatientCard
           name="Kwabena Darko"
@@ -14,7 +19,7 @@ function TriageQueuePage() {
           waitMinutes={2}
           nurse="Fatima"
           onAssign={() => console.log("Assign")}
-          onViewDetails={() => console.log("Details")}
+          onViewDetails={() => selectPatient("P-001")}
         />
         <PatientCard
           name="Ama Mensah"
@@ -24,7 +29,7 @@ function TriageQueuePage() {
           waitMinutes={12}
           nurse="Saeed"
           onAssign={() => console.log("Assign")}
-          onViewDetails={() => console.log("Details")}
+          onViewDetails={() => selectPatient("P-002")}
         />
         <PatientCard
           name="Kofi Asante"
@@ -34,7 +39,7 @@ function TriageQueuePage() {
           waitMinutes={45}
           nurse={null}
           onAssign={() => console.log("Assign")}
-          onViewDetails={() => console.log("Details")}
+          onViewDetails={() => selectPatient("P-003")}
         />
         <PatientCard
           name="Efua Owusu"
@@ -44,7 +49,7 @@ function TriageQueuePage() {
           waitMinutes={22}
           nurse={null}
           onAssign={() => console.log("Assign")}
-          onViewDetails={() => console.log("Details")}
+          onViewDetails={() => selectPatient("P-004")}
         />
       </div>
     </div>
