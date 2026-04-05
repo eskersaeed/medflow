@@ -2,6 +2,7 @@ import { Badge, BADGE_VARIANT } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { useTriageStore } from "../stores/triageStore";
 import { usePatients } from "../hooks/usePatients";
+import { useUpdatePatient } from "../hooks/useUpdatePatient";
 import type { TriageLevel } from "../types/patient";
 
 const triageBadgeConfig: Record<TriageLevel, { label: string; variant: string }> = {
@@ -17,12 +18,42 @@ function PatientDetailPanel() {
   const isOpen = useTriageStore((state) => state.isDetailPanelOpen);
   const closePanel = useTriageStore((state) => state.closeDetailPanel);
   const { data: patients } = usePatients();
+  const updatePatient = useUpdatePatient();
 
   const patient = patients?.find((p) => p.id === selectedPatientId);
 
   if (!isOpen || !patient) return null;
 
   const triage = triageBadgeConfig[patient.triageLevel];
+
+  const handleAssign = () => {
+    updatePatient.mutate({
+      id: patient.id,
+      updates: { nurse: "Saeed", status: "in-progress" },
+    });
+  };
+
+  const handleBeginTreatment = () => {
+    updatePatient.mutate({
+      id: patient.id,
+      updates: { status: "in-progress" },
+    });
+  };
+
+  const handleEscalate = () => {
+    updatePatient.mutate({
+      id: patient.id,
+      updates: { status: "escalated" },
+    });
+  };
+
+  const handleDischarge = () => {
+    updatePatient.mutate({
+      id: patient.id,
+      updates: { status: "discharged", nurse: null, bedNumber: null },
+    });
+    closePanel();
+  };
 
   return (
     <>
@@ -106,7 +137,8 @@ function PatientDetailPanel() {
                 label="Assign to Me"
                 variant="primary"
                 size="large"
-                onClick={() => console.log("Assign", patient.id)}
+                fullWidth
+                onClick={handleAssign}
               />
             )}
             {patient.status === "waiting" && (
@@ -114,15 +146,26 @@ function PatientDetailPanel() {
                 label="Begin Treatment"
                 variant="secondary"
                 size="large"
-                onClick={() => console.log("Begin treatment", patient.id)}
+                fullWidth
+                onClick={handleBeginTreatment}
               />
             )}
-            {patient.status !== "escalated" && (
+            {patient.status !== "escalated" && patient.status !== "discharged" && (
               <Button
                 label="Escalate"
                 variant="danger"
                 size="large"
-                onClick={() => console.log("Escalate", patient.id)}
+                fullWidth
+                onClick={handleEscalate}
+              />
+            )}
+            {patient.status === "in-progress" && (
+              <Button
+                label="Discharge"
+                variant="ghost"
+                size="large"
+                fullWidth
+                onClick={handleDischarge}
               />
             )}
           </div>

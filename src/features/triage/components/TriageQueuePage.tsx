@@ -4,12 +4,14 @@ import { TriageFilterBar } from "./TriageFilterBar";
 import { PatientDetailPanel } from "./PatientDetailPanel";
 import { useTriageStore } from "../stores/triageStore";
 import { usePatients } from "../hooks/usePatients";
+import { useUpdatePatient } from "../hooks/useUpdatePatient";
 import { useMemo } from "react";
 
 function TriageQueuePage() {
   const { data: patients, isLoading, isError, error } = usePatients();
   const filters = useTriageStore((state) => state.filters);
   const selectPatient = useTriageStore((state) => state.selectPatient);
+  const updatePatient = useUpdatePatient();
 
   const filteredPatients = useMemo(() => {
     if (!patients) return [];
@@ -92,7 +94,12 @@ function TriageQueuePage() {
               triageLevel={patient.triageLevel}
               waitMinutes={patient.waitMinutes}
               nurse={patient.nurse}
-              onAssign={() => console.log(`Assign ${patient.name}`)}
+              onAssign={() =>
+                updatePatient.mutate({
+                  id: patient.id,
+                  updates: { nurse: "Saeed", status: "in-progress" },
+                })
+              }
               onViewDetails={() => selectPatient(patient.id)}
             />
           ))
