@@ -1,5 +1,7 @@
 import { Badge, BADGE_VARIANT } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { Can } from "@/features/auth/components/Can";
+import { useAuthStore } from "@/features/auth/stores/authStore";
 import { useTriageStore } from "../stores/triageStore";
 import { usePatients } from "../hooks/usePatients";
 import { useUpdatePatient } from "../hooks/useUpdatePatient";
@@ -19,6 +21,7 @@ function PatientDetailPanel() {
   const closePanel = useTriageStore((state) => state.closeDetailPanel);
   const { data: patients } = usePatients();
   const updatePatient = useUpdatePatient();
+  const userName = useAuthStore((state) => state.user.name);
 
   const patient = patients?.find((p) => p.id === selectedPatientId);
 
@@ -29,7 +32,7 @@ function PatientDetailPanel() {
   const handleAssign = () => {
     updatePatient.mutate({
       id: patient.id,
-      updates: { nurse: "Saeed", status: "in-progress" },
+      updates: { nurse: userName, status: "in-progress" },
     });
   };
 
@@ -133,13 +136,15 @@ function PatientDetailPanel() {
           <div className="border-t border-slate-200 pt-4 space-y-3">
             <p className="text-xs text-slate-500 uppercase tracking-wide">Actions</p>
             {!patient.nurse && (
-              <Button
-                label="Assign to Me"
-                variant="primary"
-                size="large"
-                fullWidth
-                onClick={handleAssign}
-              />
+              <Can permission="assignPatients">
+                <Button
+                  label={`Assign to ${userName}`}
+                  variant="primary"
+                  size="large"
+                  fullWidth
+                  onClick={handleAssign}
+                />
+              </Can>
             )}
             {patient.status === "waiting" && (
               <Button
@@ -151,22 +156,26 @@ function PatientDetailPanel() {
               />
             )}
             {patient.status !== "escalated" && patient.status !== "discharged" && (
-              <Button
-                label="Escalate"
-                variant="danger"
-                size="large"
-                fullWidth
-                onClick={handleEscalate}
-              />
+              <Can permission="escalatePatients">
+                <Button
+                  label="Escalate"
+                  variant="danger"
+                  size="large"
+                  fullWidth
+                  onClick={handleEscalate}
+                />
+              </Can>
             )}
             {patient.status === "in-progress" && (
-              <Button
-                label="Discharge"
-                variant="ghost"
-                size="large"
-                fullWidth
-                onClick={handleDischarge}
-              />
+              <Can permission="dischargePatients">
+                <Button
+                  label="Discharge"
+                  variant="ghost"
+                  size="large"
+                  fullWidth
+                  onClick={handleDischarge}
+                />
+              </Can>
             )}
           </div>
         </div>
