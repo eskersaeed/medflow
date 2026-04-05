@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/Header";
 import { PatientCard } from "./PatientCard";
 import { TriageFilterBar } from "./TriageFilterBar";
+import { PatientDetailPanel } from "./PatientDetailPanel";
 import { useTriageStore } from "../stores/triageStore";
 import { usePatients } from "../hooks/usePatients";
 import { useMemo } from "react";
@@ -97,6 +98,7 @@ function TriageQueuePage() {
           ))
         )}
       </div>
+      <PatientDetailPanel />
     </div>
   );
 }
