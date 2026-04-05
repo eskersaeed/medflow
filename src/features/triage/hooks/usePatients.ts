@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { MOCK_PATIENTS } from "@/mocks/data/patients";
 import type { Patient } from "../types/patient";
 
-function fetchPatients(): Promise<Patient[]> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(MOCK_PATIENTS);
-    }, 800);
-  });
+async function fetchPatients(): Promise<Patient[]> {
+  const response = await fetch("/api/patients");
+  if (!response.ok) {
+    throw new Error("Failed to fetch patients");
+  }
+  return response.json();
 }
 
 function usePatients() {
