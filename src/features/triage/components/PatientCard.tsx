@@ -1,6 +1,7 @@
 import { Badge, BADGE_VARIANT } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import type { BadgeVariant } from "@/components/ui/Badge";
 
 const TRIAGE_LEVEL = {
   Resuscitation: 1,
@@ -23,7 +24,7 @@ interface PatientCardProps {
   onViewDetails: () => void;
 }
 
-const triageBadgeConfig: Record<TriageLevel, { label: string; variant: string }> = {
+const triageBadgeConfig: Record<TriageLevel, { label: string; variant: BadgeVariant }> = {
   1: { label: "Resuscitation", variant: BADGE_VARIANT.Resuscitation },
   2: { label: "Emergency", variant: BADGE_VARIANT.Emergency },
   3: { label: "Urgent", variant: BADGE_VARIANT.Urgent },

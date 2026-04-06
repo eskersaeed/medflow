@@ -6,8 +6,9 @@ import { useTriageStore } from "../stores/triageStore";
 import { usePatients } from "../hooks/usePatients";
 import { useUpdatePatient } from "../hooks/useUpdatePatient";
 import type { TriageLevel } from "../types/patient";
+import type { BadgeVariant } from "@/components/ui/Badge";
 
-const triageBadgeConfig: Record<TriageLevel, { label: string; variant: string }> = {
+const triageBadgeConfig: Record<TriageLevel, { label: string; variant: BadgeVariant }> = {
   1: { label: "Resuscitation", variant: BADGE_VARIANT.Resuscitation },
   2: { label: "Emergency", variant: BADGE_VARIANT.Emergency },
   3: { label: "Urgent", variant: BADGE_VARIANT.Urgent },
@@ -141,7 +142,6 @@ function PatientDetailPanel() {
                   label={`Assign to ${userName}`}
                   variant="primary"
                   size="large"
-                  fullWidth
                   onClick={handleAssign}
                 />
               </Can>
@@ -151,30 +151,17 @@ function PatientDetailPanel() {
                 label="Begin Treatment"
                 variant="secondary"
                 size="large"
-                fullWidth
                 onClick={handleBeginTreatment}
               />
             )}
             {patient.status !== "escalated" && patient.status !== "discharged" && (
               <Can permission="escalatePatients">
-                <Button
-                  label="Escalate"
-                  variant="danger"
-                  size="large"
-                  fullWidth
-                  onClick={handleEscalate}
-                />
+                <Button label="Escalate" variant="danger" size="large" onClick={handleEscalate} />
               </Can>
             )}
             {patient.status === "in-progress" && (
               <Can permission="dischargePatients">
-                <Button
-                  label="Discharge"
-                  variant="ghost"
-                  size="large"
-                  fullWidth
-                  onClick={handleDischarge}
-                />
+                <Button label="Discharge" variant="ghost" size="large" onClick={handleDischarge} />
               </Can>
             )}
           </div>
