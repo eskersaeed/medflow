@@ -10,25 +10,26 @@ A production-grade frontend application for managing emergency department patien
 
 ## Tech Stack
 
-| Layer | Tool |
-|-------|------|
-| Framework | React 19 + TypeScript |
-| Build Tool | Vite |
-| Styling | Tailwind CSS v4 |
-| State (Client) | Zustand |
-| State (Server) | TanStack Query |
-| Routing | React Router v7 |
-| Forms | React Hook Form + Zod |
-| Charts | Recharts |
-| Tables | TanStack Table |
-| Testing | Vitest + React Testing Library + Playwright |
-| CI/CD | GitHub Actions |
-| Deployment | Vercel |
-| Code Quality | ESLint + Prettier + Husky + lint-staged |
+| Layer          | Tool                                        |
+| -------------- | ------------------------------------------- |
+| Framework      | React 19 + TypeScript                       |
+| Build Tool     | Vite                                        |
+| Styling        | Tailwind CSS v4                             |
+| State (Client) | Zustand                                     |
+| State (Server) | TanStack Query                              |
+| Routing        | React Router v7                             |
+| Forms          | React Hook Form + Zod                       |
+| Charts         | Recharts                                    |
+| Tables         | TanStack Table                              |
+| Testing        | Vitest + React Testing Library + Playwright |
+| CI/CD          | GitHub Actions                              |
+| Deployment     | Vercel                                      |
+| Code Quality   | ESLint + Prettier + Husky + lint-staged     |
 
 ## Features
 
 ### Triage Queue
+
 - Real-time patient queue sorted by clinical priority (Australasian Triage Scale)
 - Colour-coded severity badges (Resuscitation → Non-Urgent)
 - Patient cards with chief complaint, wait time, and nurse assignment
@@ -36,16 +37,19 @@ A production-grade frontend application for managing emergency department patien
 - Search and filter by status, priority, and assigned nurse
 
 ### Shift Management
+
 - Weekly calendar view with Early, Late, and Night shifts
 - Conflict detection for double-booked nurses
 - Understaffed ward warnings
 
 ### Dashboard Analytics
+
 - Key metrics: average wait time, patients seen, bed occupancy, staffing ratio
 - Trend charts for wait times and patient volume
 - Triage category distribution
 
 ### Role-Based Access
+
 - Three roles: Nurse, Charge Nurse, Admin
 - Permission-based UI rendering
 - Route-level protection
@@ -53,10 +57,12 @@ A production-grade frontend application for managing emergency department patien
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - npm 9+
 
 ### Installation
+
 ```bash
 git clone git@github.com:eskersaeed/medflow.git
 cd medflow
@@ -64,6 +70,7 @@ npm install
 ```
 
 ### Development
+
 ```bash
 npm run dev
 ```
@@ -71,11 +78,13 @@ npm run dev
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ### Build
+
 ```bash
 npm run build
 ```
 
 ## Project Structure
+
 ```
 src/
 ├── components/
